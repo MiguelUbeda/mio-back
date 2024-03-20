@@ -35,13 +35,39 @@ class UserController extends AbstractController
      */
     public function index(): Response
     {
-        //Get current user by accessing token and return all the users.
-        // $token = $this->tokenStorage->getToken();
-        // $user = $token->getUser();
-        //TO DO: QUE SE DEVUELVAN TODOS LOS USERS;
+        //Return all the users.
         $users = $this->userRepository->findAll();
 
         return $this->json(['users' => $users]);
+    }
+
+     /**
+     * @Route("/user/config", name="user-config", methods={"GET"})
+     */
+    public function usersConfig(): Response
+    {
+        //Get current user by accessing token.
+        $token = $this->tokenStorage->getToken();
+        $user = $token->getUser();
+        return $this->json(['user' => $user]);
+    }
+
+    /**
+     * @Route("/user/config", name="user-config-update", methods={"POST"})
+     */
+    public function updateUsersConfig(Request $request): Response
+    {
+        //Get current user by accessing token.
+        $token = $this->tokenStorage->getToken();
+        $user = $token->getUser();
+        // Update the user in database with the new data from the form 
+        $data = json_decode($request->getContent(), true);
+
+        $user->setEmail($data['email']);
+
+        $this->entityManager->flush();
+
+        return $this->json($user);
     }
 
     /**
