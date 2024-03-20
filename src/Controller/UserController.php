@@ -37,8 +37,23 @@ class UserController extends AbstractController
     {
         //Return all the users.
         $users = $this->userRepository->findAll();
+        $token = $this->tokenStorage->getToken();
+        $currentUser = $token->getUser();
+        $filteredUsers = [];
+        
+        // Filter current user in the users list
+        foreach ($users as $user) {
+            if ($user->getId() !== $currentUser->getId()) {
+                $filteredUsers[] = [
+                    'id' => $user->getId(),
+                    'email' => $user->getEmail(),
 
-        return $this->json(['users' => $users]);
+                ];
+            }
+        }
+        
+
+        return $this->json(['users' => $filteredUsers]);
     }
 
      /**

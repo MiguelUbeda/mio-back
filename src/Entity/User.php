@@ -26,6 +26,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
  
     #[ORM\Column(type: 'string', nullable: true)]
     private $password;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private $biography;
  
      
  
