@@ -60,6 +60,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
  
         return $this;
     }
+
+    public function getBiography(): string
+    {
+        return (string) $this->biography;
+    }
+ 
+    public function setBiography(string $biography): self
+    {
+        $this->biography = $biography;
+ 
+        return $this;
+    }
  
     /**
      * A visual identifier that represents this user.

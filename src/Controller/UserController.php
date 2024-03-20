@@ -47,7 +47,8 @@ class UserController extends AbstractController
                 $filteredUsers[] = [
                     'id' => $user->getId(),
                     'email' => $user->getEmail(),
-
+                    'biography' => $user->getBiography(),
+                    'username' => $user->getUsername()
                 ];
             }
         }
@@ -78,7 +79,7 @@ class UserController extends AbstractController
         // Update the user in database with the new data from the form 
         $data = json_decode($request->getContent(), true);
 
-        $user->setEmail($data['email']);
+        $user->setBiography($data['biography']);
 
         $this->entityManager->flush();
 
@@ -95,6 +96,7 @@ class UserController extends AbstractController
 
         $user->setEmail($data['email']);
         $user->setUsername($data['username']);
+        $user->setBiography($data['biography']);
 
         $this->entityManager->flush();
 
